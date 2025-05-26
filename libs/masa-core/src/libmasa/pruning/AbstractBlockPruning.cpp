@@ -27,9 +27,11 @@
 #include "../../common/Common.hpp"
 
 
-//#define DUMP (0)
+#define DUMP (1)
 //#define SHARE (1)
 //#define DEBUGM (1)
+
+extern FILE * dumpx;
 
 #define LIM 40050426
 //#define LIM 5220960
@@ -50,7 +52,6 @@ AbstractBlockPruning::AbstractBlockPruning() {
 }
 
 AbstractBlockPruning::~AbstractBlockPruning() {
-
 }
 
 void AbstractBlockPruning::updateBestScore(int score) {
@@ -211,8 +212,9 @@ bool AbstractBlockPruning::isBlockPrunableMulti(int bx, int by, int score, int d
 
         if (DUMP) {
           if (max <= best) {
-            printf("%d %d\n", i0, j0);
-            printf("%d %d\n", i1, j1);
+            fprintf(dumpx, "%d %d\n", i0, j0);
+            fprintf(dumpx, "%d %d\n", i1, j1);
+            fflush(dumpx);
           }
        }
 
