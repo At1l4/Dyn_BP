@@ -40,7 +40,6 @@ public:
 	void setGlobalAlignment();
 	int getRecurrenceType() const;
 	void setRecurrenceType(int recurrenceType);
-	File *dumpx = nullptr;
 
 protected:
 	bool isBlockPrunable(int bx, int by, int score);

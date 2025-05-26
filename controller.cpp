@@ -484,7 +484,7 @@ int main(int argc, char *argv[]) {
     	  part = kk*config.gpus + i + 1;
           //command.str("");
           command.clear();
-    	  command = "EXEC|./cudalign --blocks=512 --clear --no-flush --stage-1 --shared-dir=";
+    	  command = "EXEC|./cudalign --dump-blocks --blocks=512 --clear --no-flush --stage-1 --shared-dir=";
           ss.str("");
           ss.clear();
           ss << WORKDIR;

@@ -31,6 +31,8 @@
 //#define SHARE (1)
 //#define DEBUGM (1)
 
+extern FILE * dumpx;
+
 #define LIM 40050426
 //#define LIM 5220960
 
@@ -47,11 +49,9 @@ AbstractBlockPruning::AbstractBlockPruning() {
 	this->score_params = NULL;
 	this->max_i = 0;
 	this->max_j = 0;
-	this->dumpx = fopen("/home/laicoadm/Documentos/Atila/dynbp_local/DUMP.txt", "wt");
 }
 
 AbstractBlockPruning::~AbstractBlockPruning() {
-	fclose(dumpx);
 }
 
 void AbstractBlockPruning::updateBestScore(int score) {
@@ -212,7 +212,7 @@ bool AbstractBlockPruning::isBlockPrunableMulti(int bx, int by, int score, int d
 
         if (DUMP) {
           if (max <= best) {
-            fprintf(dumpx, "%d %d", i0, j0);
+            fprintf(dumpx, "%d %d\n", i0, j0);
             fprintf(dumpx, "%d %d\n", i1, j1);
             fflush(dumpx);
           }
