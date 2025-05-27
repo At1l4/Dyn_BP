@@ -73,6 +73,7 @@ extern FILE * dbabp;
 extern FILE * dbbpd;
 extern FILE * dbsta;
 extern FILE * dbdyn;
+extern FILE * dumpx;
 
 //extern double pruningtime;
 
@@ -330,6 +331,14 @@ int stage1(Job* job) {
        //dbsta = fopen(filename.c_str(),"wt");
     }
 
+    if (DUMP) {
+       string dir;
+       string filename;
+       dir =  job->getWorkPath();
+       //printf ("\n\n *** path: %s *** \n\n", dir.c_str());
+       filename = dir + "/DUMP.txt";
+       dumpx = fopen(filename.c_str(),"wt");
+    }
     /* if (dynamic != 0) 
        if (splitstep%dynamic == 1) {
           filename = dir + "/dyn.txt";
@@ -525,7 +534,12 @@ int stage1(Job* job) {
        //fflush(dbsta);
        //fclose(dbsta);
     }
-    
+	
+    if (DUMP) {
+       fflush(dumpx);
+       fclose(dumpx);
+    }
+
     if (dynamic != 0) {
             string filenamedyn = wdir + "/dynend.txt";
             dbdyn = fopen(filenamedyn.c_str(),"wt");
