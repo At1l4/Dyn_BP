@@ -1,8 +1,8 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 #
-AC_PREREQ([2.71])
-AC_INIT([MASA-CUDAlign],[3.9.1.1024],[edans.sandes@gmail.com],[masa-cudalign],[https://github.com/edanssandes/masa-cudalign])
+AC_PREREQ([2.63])
+AC_INIT([MASA-CUDAlign], [3.9.1.1024], [edans.sandes@gmail.com], [masa-cudalign], [https://github.com/edanssandes/masa-cudalign])
 AC_CONFIG_AUX_DIR(admin)
 AM_INIT_AUTOMAKE
 AC_CONFIG_HEADERS([src/config.h])
@@ -54,22 +54,22 @@ OPTIMIZATION="-O3"
 
 
 AC_ARG_ENABLE([debug],
-	AS_HELP_STRING([--enable-debug],[enable cpu debug]),
+	AC_HELP_STRING([--enable-debug],[enable cpu debug]),
 	[DEBUG="-ggdb"; OPTIMIZATION=""]
 )
 
 AC_ARG_ENABLE([cuda-debug],
-	AS_HELP_STRING([--enable-cuda-debug],[enable cuda debug]),
+	AC_HELP_STRING([--enable-cuda-debug],[enable cuda debug]),
 	[NVCC_CUDA_DEBUG="--debug"; OPTIMIZATION=""]
 )
 
 AC_ARG_ENABLE([device-debug],
-	AS_HELP_STRING([--enable-device-debug],[enable cuda debug]),
+	AC_HELP_STRING([--enable-device-debug],[enable cuda debug]),
 	[NVCC_CUDA_DEBUG="--debug --device-debug"; OPTIMIZATION=""]
 )
 
 AC_ARG_WITH([cuda-arch],
-	AS_HELP_STRING([--with-cuda-arch=ARCH],[select one cuda architecture, e.g. sm_30]),
+	AC_HELP_STRING([--with-cuda-arch=ARCH],[select one cuda architecture, e.g. sm_30]),
 	[CUDA_ARCH="$withval"],
 	[CUDA_ARCH="sm_30"]
 )
@@ -77,20 +77,20 @@ NVCC_CUDA_ARCH="--gpu-architecture=$CUDA_ARCH"
 AC_DEFINE_UNQUOTED([COMPILED_CUDA_ARCH], ["$CUDA_ARCH"], [architecture used in --gpu-architecture nvcc parameter])
 
 AC_ARG_WITH([threads],
-	AS_HELP_STRING([--with-threads=COUNT],[choose the number of cuda threads [default=128] (use power of 2)]),
+	AC_HELP_STRING([--with-threads=COUNT],[choose the number of cuda threads [default=128] (use power of 2)]),
 	[CUDALIGN_THREADS="-DTHREADS_COUNT=$withval"],
 	[CUDALIGN_THREADS="-DTHREADS_COUNT=128"]
 )
 
 AC_ARG_WITH([maxregcount],
-	AS_HELP_STRING([--with-maxregcount=COUNT],[choose the maximum number of registers per threads [default=no]]),
+	AC_HELP_STRING([--with-maxregcount=COUNT],[choose the maximum number of registers per threads [default=no]]),
 	[CUDA_REGISTERS="--maxrregcount $withval"],
 	[CUDA_REGISTERS=""]
 )
 
 #default: 64bit
 AC_ARG_ENABLE([32bit],
-	AS_HELP_STRING([--enable-32bit],[force compilation in 32 bit mode.]),
+	AC_HELP_STRING([--enable-32bit],[force compilation in 32 bit mode.]),
 	[ARCH="386"; CUDA_LIB_DIR="lib"; PLATFORM="-m32";
 		AC_MSG_NOTICE([Enabling 32bit compilation])
 	],
@@ -105,12 +105,12 @@ AC_ARG_ENABLE([32bit],
 # Setup CUDA paths
 # ------------------------------------------------------------------------------
 AC_ARG_WITH([cuda],
-   [AS_HELP_STRING([--with-cuda=PATH],[path where cuda is installed (default=/usr/local/cuda)])],
+   [AC_HELP_STRING([--with-cuda=PATH],[path where cuda is installed (default=/usr/local/cuda)])],
    [CUDA_HOME=$withval],
    [CUDA_HOME=/usr/local/cuda])
 
 AC_ARG_WITH([dummy],
-	[AS_HELP_STRING([--without-cuda],[disable CUDA compilation])]
+	[AC_HELP_STRING([--without-cuda],[disable CUDA compilation])]
 	)
 
 AM_CONDITIONAL([COMPILE_CUDA], [test "x$CUDA_HOME" != "xno"])
@@ -127,7 +127,7 @@ AS_IF([test "x$CUDA_HOME" != "xno"], [
 	)
 
 	AC_ARG_ENABLE([compiler_bindir],
-		AS_HELP_STRING([--enable-compiler-bindir=PATH],[force some g++ version to nvcc, e.g. /usr/bin/g++-4.4.]),
+		AC_HELP_STRING([--enable-compiler-bindir=PATH],[force some g++ version to nvcc, e.g. /usr/bin/g++-4.4.]),
 		[NVCC_COMPILER_BINDIR="--compiler-bindir=$enableval"; 
 			AC_MSG_NOTICE([using nvcc parameter: $NVCC_COMPILER_BINDIR])
 		],
@@ -137,7 +137,7 @@ AS_IF([test "x$CUDA_HOME" != "xno"], [
 	)
 
 	AC_ARG_WITH([nvcc],
-	   [AS_HELP_STRING([--with-nvcc=PATH],[path where nvcc is installed (e.g. /usr/local/cuda/bin)])],
+	   [AC_HELP_STRING([--with-nvcc=PATH],[path where nvcc is installed (e.g. /usr/local/cuda/bin)])],
 	   [NVCC_PATH=$withval],
 	   [NVCC_PATH=$CUDA_HOME/bin]
 	)

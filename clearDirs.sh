@@ -1,5 +1,5 @@
 #!/bin/bash
 
 cd ..
-rm -rf atila_shared/*
-cd dynbp_local
+rm -rf dirs_MASA/*
+cd FT-dynBP
